@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+	<%-include('./partials/head') %>
+	<body>
+		<%-include('./partials/header') %> <%-include('./partials/nav') %>
+
+		<div
+			id="carouselExampleIndicators"
+			class="carousel slide"
+			data-bs-ride="true"
+		>
+			<div class="carousel-indicators d-none d-sm-flex">
+				<button
+					type="button"
+					data-bs-target="#carouselExampleIndicators"
+					data-bs-slide-to="0"
+					class="active"
+					aria-current="true"
+					aria-label="Slide 1"
+				></button>
+				<button
+					type="button"
+					data-bs-target="#carouselExampleIndicators"
+					data-bs-slide-to="1"
+					aria-label="Slide 2"
+				></button>
+				<button
+					type="button"
+					data-bs-target="#carouselExampleIndicators"
+					data-bs-slide-to="2"
+					aria-label="Slide 3"
+				></button>
+			</div>
+			<div class="carousel-inner d-none d-sm-block" data-bs-interval="2000">
+				<div class="carousel-item active">
+					<img
+						src="/imagenes/others/banner1.jpg"
+						class="d-block w-100"
+						alt="..."
+					/>
+				</div>
+				<div class="carousel-item" data-bs-interval="4000">
+					<img
+						src="/imagenes/others/banner2.jpg"
+						class="d-block w-100"
+						alt="..."
+					/>
+				</div>
+				<div class="carousel-item" data-bs-interval="4000">
+					<img
+						src="/imagenes/others/banner3.jpg"
+						class="d-block w-100"
+						alt="..."
+					/>
+				</div>
+			</div>
+			<button
+				class="carousel-control-prev"
+				type="button"
+				data-bs-target="#carouselExampleIndicators"
+				data-bs-slide="prev"
+			>
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button
+				class="carousel-control-next"
+				type="button"
+				data-bs-target="#carouselExampleIndicators"
+				data-bs-slide="next"
+			>
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+
+		<main
+			class="d-flex justify-content-around mx-auto"
+			style="background-color: #eee"
+		>
+			<section>
+				<div
+					class="mb-1 d-flex justify-content-between flex-column align-items-center flex-md-row mt-3"
+				>
+					<h2 class="p-3 w-100">Productos destacados</h2>
+				</div>
+
+				<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 p-3 m-auto">
+					<% for(let p of products) {%>
+
+					<div class="col mt-3">
+						<div
+							class="card h-100 shadow m-1 p-0 d-flex justify-content-between"
+						>
+							<a href="/products/detalle/<%=p.idProductos%>"
+								><img
+									src="/imagenes/products/<%=p.imagen%>"
+									class="card-img-top"
+									alt="..."
+							/></a>
+							<div class="card-body" style="max-height: 150px">
+								<h5 class="card-title"><%=p.nombre%></h5>
+								<p class="card-text">
+									$<%=p.precio - ((p.precio * p.descuento) / 100)%>
+								</p>
+								<div class="d-flex justify-content-evenly">
+									<% if (p.descuento > 0) { %>
+										<p class="text-success "><%= p.descuento %>% OFF</p>
+										<p class="text-decoration-line-through text-danger">
+											$<%= p.precio %>
+										</p>
+									<% } %>
+									<a href="/products/detalle/<%=p.idProductos%>" type="button" class="btn btn-outline-success">
+										Ver
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<% } %>
+				</div>
+			</section>
+
+			<section class="d-none d-md-block p-4 pe-1 m-2">
+				<img
+					class=""
+					style="width: 250px"
+					src="/imagenes/others/banner_vertical.jpg"
+					alt="Banner de temporada"
+				/>
+			</section>
+		</main>
+
+		<%-include('./partials/footer') %>
+	</body>
+</html>

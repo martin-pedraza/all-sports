@@ -1,0 +1,114 @@
+<nav class="navbar navbar-expand-md bg-white pb-3">
+	<div class="container-fluid">
+		<a href="/">
+			<img
+				src="/imagenes/others/logo.png"
+				class="border border-0 p-2 d-md-none"
+				style="width: 200px"
+				id="logo2"
+				alt="Logo"
+			/>
+		</a>
+		<% if (locals.isLogged) { %>
+			<a
+				href="/users/perfil"
+				class="navbar-toggler nav-link border border-0 d-none d-sm-block d-md-none fs-6"
+			>
+				Mi perfil
+			</a>
+
+			<a
+				href="/users/logout"
+				class="navbar-toggler nav-link border border-0 d-none d-sm-block d-md-none fs-6"
+			>
+				Cerrar sesión
+			</a>
+		<% } else { %>
+			<a
+				href="/users/login"
+				class="navbar-toggler nav-link border border-0 d-none d-sm-block d-md-none fs-6"
+			>
+				Ingresar/Registrarse
+			</a>
+		<% } %>
+		<button
+			class="navbar-toggler"
+			type="button"
+			data-bs-toggle="collapse"
+			data-bs-target="#navbarTogglerDemo02"
+			aria-controls="navbarTogglerDemo02"
+			aria-expanded="false"
+			aria-label="Toggle navigation"
+		>
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+			<ul class="d-flex justify-content-around navbar-nav w-100 mb-2 mb-lg-0">
+				<li class="flex-fill btn btn-outline-light rounded-0 border-0">
+					<a class="nav-link text-start" href="/products/listadoProductos/futbol">Fútbol</a>
+				</li>
+				<li class="flex-fill btn btn-outline-light rounded-0 border-0">
+					<a class="nav-link text-start" href="/products/listadoProductos/basketball">Basketball</a>
+				</li>
+				<li class="flex-fill btn btn-outline-light rounded-0 border-0">
+					<a class="nav-link text-start" href="/products/listadoProductos/tenis">Tenis</a>
+				</li>
+				<li class="flex-fill btn btn-outline-light rounded-0 border-0">
+					<a class="nav-link text-start" href="/products/listadoProductos/volleybal">Volleyball</a>
+				</li>
+				<li class="flex-fill btn btn-outline-light rounded-0 border-0">
+					<a class="nav-link text-start" href="/products/listadoProductos/natacion">Natación</a>
+				</li>
+				<li class="flex-fill btn btn-outline-light rounded-0 border-0 justify-content-end">
+					<a class="nav-link text-start" href="/products/listadoProductos/otros">Otros</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link d-md-none border border-0 fs-1 " href="/carrito"
+						><i class="bi bi-cart4"></i
+					></a>
+				</li>
+			</ul>
+			<form class="d-flex d-flex justify-content-end" role="search" action="/buscar" method="get">
+				<input
+					class="form-control me-2"
+					type="search"
+					placeholder="Buscar producto"
+					name="producto"
+					aria-label="Search"
+				/>
+				<button class="btn" type="submit">Buscar</button>
+			</form>
+			<ul
+				class="d-flex d-sm-none justify-content-around navbar-nav w-100 mb-2 mb-lg-0"
+			>
+				<% if (locals.isLogged) { %>
+					<li class="nav-item pt-3">
+						<a
+							href="/users/perfil"
+							class="list-group-item list-group-item-action border border-0 pt-3"
+						>
+							Mi perfil
+						</a>
+					</li>
+					<li class="nav-item pt-3">
+						<a
+							href="/users/logout"
+							class="list-group-item list-group-item-action border border-0 pt-3"
+						>
+							Cerrar sesión
+						</a>
+					</li>
+				<% } else { %>
+					<li class="nav-item pt-3">
+						<a
+							href="/users/login"
+							class="list-group-item list-group-item-action border border-0 pt-1"
+						>
+							Ingresar/Registrarse
+						</a>
+					</li>
+				<% } %>
+			</ul>
+		</div>
+	</div>
+</nav>

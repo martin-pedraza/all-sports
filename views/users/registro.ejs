@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+	<%-include('../partials/head') %>
+	<body>
+		<%-include('../partials/header') %> <%-include('../partials/nav') %>
+
+		<main class="px-5 pb-4 pt-4" style="background-color: #eee">
+			<h2 class="p-3 text-center mx-auto" style="max-width: 65vw">
+				Regístrate
+			</h2>
+			<form action="/users/registro" method="POST" enctype="multipart/form-data" id="formulario">
+				<div class="mb-3 mx-auto" style="max-width: 65vw">
+					<label for="nombre" class="form-label text-primary"
+						><strong>Nombre completo</strong></label
+					>
+					<input
+						type="text"
+						class="form-control <%= (locals.errors && errors.nombre) ? 'is-invalid' : null %>"
+						id="nombre"
+						placeholder="Nombre Apellido"
+						name="nombre"
+						value="<%= locals.oldData && oldData.nombre ? oldData.nombre : null %>"
+					/>
+					<% if (locals.errors && errors.nombre) { %>
+						<p style="color: red">
+							<%= errors.nombre.msg %> 
+						</p>
+					<% } %>
+				</div>
+
+				<div class="mb-3 mx-auto" style="max-width: 65vw">
+					<label for="correo" class="form-label text-primary"
+						><strong>Correo electrónico</strong></label
+					>
+					<input
+						type="text"
+						class="form-control <%= (locals.errors && errors.correo) ? 'is-invalid' : null %>"
+						id="correo"
+						placeholder="test@gmail.com"
+						name="correo"
+						value="<%= locals.oldData && oldData.correo ? oldData.correo : null %>"
+					/>
+					<% if (locals.errors && errors.correo) { %>
+						<p style="color: red">
+							<%= errors.correo.msg %> 
+						</p>
+					<% } %>
+				</div>
+
+				<div class="mb-3 mx-auto" style="max-width: 65vw">
+					<label for="password" class="form-label text-primary"
+						><strong>Contraseña</strong></label
+					>
+					<div class="input-group">
+						<input
+							type="password"
+							class="form-control <%= (locals.errors && errors.password) ? 'is-invalid' : null %>"
+							id="password"
+							name="password"
+							value="<%= locals.oldData && oldData.password ? oldData.password : null %>"
+						/>
+						<button class="btn btn-outline-dark" type="button" onclick="mostrarContrasena()">
+							<i class="bi bi-eye"></i>
+						</button>
+					</div>
+					<% if (locals.errors && errors.password) { %>
+						<p style="color: red">
+							<%= errors.password.msg %> 
+						</p>
+					<% } %>
+				</div>			
+
+				<div class="mb-3 mx-auto" style="max-width: 65vw">
+					<label for="passwordConfirm" class="form-label text-primary"
+						><strong>Confirmar contraseña</strong></label
+					>
+					<div class="input-group">
+						<input
+							type="password"
+							class="form-control <%= (locals.errors && errors.passwordConfirm) ? 'is-invalid' : null %>"
+							id="passwordConfirm"
+							name="passwordConfirm"
+							value="<%= locals.oldData && oldData.passwordConfirm ? oldData.passwordConfirm : null %>"
+						/>
+						<button class="btn btn-outline-dark" type="button" onclick="mostrarContrasenaConfirm()">
+							<i class="bi bi-eye"></i>
+						</button>
+					</div>
+					<% if (locals.errors && errors.passwordConfirm) { %>
+						<p style="color: red">
+							<%= errors.passwordConfirm.msg %> 
+						</p>
+					<% } %>
+				</div>
+
+				<div class="mb-3 mx-auto" style="max-width: 65vw">
+					<label for="telefono" class="form-label text-primary"
+						><strong>Teléfono</strong></label
+					>
+					<input
+						type="tel"
+						class="form-control <%= (locals.errors && errors.telefono) ? 'is-invalid' : null %>"
+						id="telefono"
+						placeholder="1112341234"
+						name="telefono"
+						value="<%= locals.oldData && oldData.telefono ? oldData.telefono : null %>"
+					/>
+					<% if (locals.errors && errors.telefono) { %>
+						<p style="color: red">
+							<%= errors.telefono.msg %> 
+						</p>
+					<% } %>
+				</div>
+
+				<div class="mb-3 mx-auto" style="max-width: 65vw">
+					<label for="direccion" class="form-label text-primary"
+						><strong>Dirección</strong></label
+					>
+					<input
+						type="text"
+						class="form-control <%= (locals.errors && errors.direccion) ? 'is-invalid' : null %>"
+						id="direccion"
+						placeholder="calle 123, ciudad"
+						name="direccion"
+						value="<%= locals.oldData && oldData.direccion ? oldData.direccion : null %>"
+					/>
+					<% if (locals.errors && errors.direccion) { %>
+						<p style="color: red">
+							<%= errors.direccion.msg %> 
+						</p>
+					<% } %>
+				</div>
+
+				<div class="mb-3 mx-auto" style="max-width: 65vw">
+					<label for="avatar" class="form-label text-primary"
+						><strong>Avatar</strong></label
+					>
+					<input
+						type="file"
+						class="form-control"
+						id="avatar"
+						name="avatar"
+					/>
+					<% if (locals.errors && errors.avatar) { %>
+						<p style="color: red">
+							<%= errors.avatar.msg %> 
+						</p>
+					<% } %>
+				</div>
+
+				<div class="mb-3 mx-auto" style="max-width: 65vw">
+					<label for="pais" class="form-label text-primary"
+						><strong>País</strong></label
+					>
+					<select
+						class="form-select <%= (locals.errors && errors.pais) ? 'is-invalid' : null %>"
+						aria-label="Default select example"
+						name="pais"
+						id="pais"
+					>
+						<option value="0" disabled selected>Tu ubicación</option>
+						<% for (let p of paises) { %>
+							<option
+								value="<%= p.idPaises %>"
+								<%= locals.oldData && (p.idPaises === oldData.pais) ? 'selected' : null %> 
+							> <%= p.nombre  %> 
+							</option>
+						<% } %>  
+					</select>
+					<% if (locals.errors && errors.pais) { %>
+						<p style="color: red">
+							<%= errors.pais.msg %> 
+						</p>
+					<% } %>
+				</div>
+
+				<div class="form-check mb-3 mx-auto" style="max-width: 65vw">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						id="terminos"
+						required
+					/>
+					<label
+						class="form-check-label mx-auto"
+						style="max-width: 65vw"
+						for="terminos"
+					>
+						Acepto
+						<a
+							id="modal"
+							href="#exampleModal"
+							data-bs-toggle="modal"
+							class="text-decoration-none"
+							><strong class="text-dark">términos y condiciones</strong></a
+						>
+						de la página
+					</label>
+					<div class="invalid-feedback">Debes aceptar los términos</div>
+				</div>
+
+				<div
+					class="modal fade mx-auto"
+					style="max-width: 65vw"
+					id="exampleModal"
+					tabindex="-1"
+					aria-labelledby="exampleModalLabel"
+					aria-hidden="true"
+				>
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+					>
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">
+									Términos y condiciones
+								</h5>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+							<div class="modal-body">
+								Esta página web es propiedad y está operado por All Sports.
+								Estos Términos establecen los términos y condiciones bajo los
+								cuales tu puedes usar nuestra página web y servicios ofrecidos
+								por nosotros. Esta página web ofrece a los visitantes elementos
+								relacionados al deporte. Al acceder o usar la página web de
+								nuestro servicio, usted aprueba que haya leído, entendido y
+								aceptado estar sujeto a estos Términos:
+								<br /><br />
+								Para usar nuestro página web y / o recibir nuestros servicios,
+								debes tener al menos 18 años de edad, o la mayoría de edad legal
+								en tu jurisdicción, y poseer la autoridad legal, el derecho y la
+								libertad para participar en estos Términos como un acuerdo
+								vinculante. No tienes permitido utilizar esta página web y / o
+								recibir servicios si hacerlo está prohibido en tu país o en
+								virtud de cualquier ley o regulación aplicable a tu caso.
+								<br /><br />
+								Al comprar un artículo, aceptas que: (i) eres responsable de
+								leer el listado completo del artículo antes de comprometerte a
+								comprarlo: (ii) celebras un contrato legalmente vinculante para
+								comprar un artículo cuando te comprometes a comprar un artículo
+								y completar el proceso de check-out.
+								<br /><br />
+								Para cualquier producto no dañado, simplemente devuélvelo con
+								los accesorios y el paquete incluidos junto con el recibo
+								original (o recibo de regalo) dentro de los 14 días posteriores
+								a la fecha que recibiste el producto, y lo cambiaremos o te
+								ofreceremos un reembolso basado en el método de pago original .
+								Además, ten en cuenta lo siguiente: (i) Los productos solo se
+								pueden devolver en el país en el que se compraron originalmente;
+								y (ii) los siguientes productos no son elegibles para la
+								devolución: [lista de artículos].
+								<br /><br />
+								Podemos, sin aviso previo, cambiar los servicios; dejar de
+								proporcionar los servicios o cualquier característica de los
+								servicios que ofrecemos; o crear límites para los servicios.
+								Podemos suspender de manera permanente o temporal el acceso a
+								los servicios sin previo aviso ni responsabilidad por cualquier
+								motivo, o sin ningún motivo.
+								<br /><br />
+								Cuando recibimos un reclamo de garantía válido de un producto
+								que vendemos, repararemos el defecto relevante o reemplazaremos
+								el producto. Si no podemos reparar o reemplazar el producto
+								dentro de un tiempo razonable, el cliente tendrá derecho a un
+								reembolso total cuando nos devuelva el producto. Pagaremos el
+								envío de los productos reparados o reemplazados al cliente y el
+								cliente será responsable de devolvernos el producto.
+								<br /><br />
+								Podemos terminar o suspender de manera permanente o temporal tu
+								acceso al servicio sin previo aviso y responsabilidad por
+								cualquier razón, incluso si a nuestra sola determinación tu
+								violas alguna disposición de estos Términos o cualquier ley o
+								regulación aplicable. Puedes descontinuar el uso y solicitar
+								cancelar tu cuenta en cualquier momento.
+								<br /><br />
+								Nos reservamos el derecho de modificar estos términos de vez en
+								cuando a nuestra entera discreción. Por lo tanto, debes revisar
+								estas páginas periódicamente. Cuando cambiemos los Términos de
+								una manera material, te notificaremos que se han realizado
+								cambios importantes en los Términos. El uso continuado de la
+								página web o nuestro servicio después de dicho cambio constituye
+								tu aceptación de los nuevos Términos. Si no aceptas alguno de
+								estos términos o cualquier versión futura de los Términos, no
+								uses o accedas (o continúes accediendo) a la página web o al
+								servicio.
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="mb-3 d-flex justify-content-between mx-auto"
+					style="max-width: 65vw"
+				>
+					<a href="./login" class="btn btn-secondary col-5">Volver</a>
+
+					<button type="submit" class="btn btn-secondary col-5">
+						Registrarse
+					</button>
+				</div>
+			</form>
+		</main>
+
+		<%-include('../partials/footer') %>
+		<script>
+			// Get a reference to our file input
+			const fileInput = document.querySelector('input[type="file"]');
+		
+			// Create a new File object
+			const myFile = new File([''], 'default.png');
+		
+			// Now let's create a DataTransfer to get a FileList
+			const dataTransfer = new DataTransfer();
+			dataTransfer.items.add(myFile);
+			fileInput.files = dataTransfer.files;
+		</script>
+
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script src="/js/registro.js"></script>
+		<script>
+			function mostrarContrasena(){
+				var tipo = document.getElementById("password");
+				if(tipo.type == "password"){
+					tipo.type = "text";
+				}else{
+					tipo.type = "password";
+				}
+			}
+			function mostrarContrasenaConfirm(){
+				var tipo = document.getElementById("passwordConfirm");
+				if(tipo.type == "password"){
+					tipo.type = "text";
+				}else{
+					tipo.type = "password";
+				}
+			}
+		</script>
+	</body>
+</html>
